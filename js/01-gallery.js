@@ -30,12 +30,16 @@ function onClick (evt){
 
     const instance = basicLightbox.create(`
     <img src="${evt.target.dataset.source}" width="800" height="600">
-`)
+`,{
+    onClose: (instance) => {
+    window.removeEventListener('keydown', onModelClose);
+    }
+});
 
     instance.show();
 
-    document.addEventListener('keydown', (evt) => {
-		if (evt.key === 'Escape') instance.close();
-	});
+    const onModelClose = (evt) => {
+        if (evt.key === 'Escape') instance.close();
+    }
+    window.addEventListener('keydown', onModelClose);
 }
-
